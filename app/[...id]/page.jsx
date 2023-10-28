@@ -1,11 +1,69 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import placeholderIcon from "../../public/placeholderWIcon.svg";
+import Button from "@/components/Button";
+import DetailCard from "@/components/DetailCard";
+import {
+  Bezier,
+  CloseCircle,
+  DeviceMessage,
+  Electricity,
+  Eye,
+  FlashSlash,
+  Hierarchy,
+  Note,
+  Sun,
+  WifiSquare,
+  Wind,
+  Wind2,
+} from "iconsax-react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Details = () => {
   const data = JSON.parse(useSearchParams().getAll("params"));
-  console.log(data);
+  const [notes, setNotes] = useState([]);
+  const [note, setNote] = useState("");
+  const [shwInput, setShwInput] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const notesArr = JSON.parse(localStorage.getItem("notesData"))[
+        data?.location?.name
+      ];
+      console.log(notesArr);
+      notesArr === undefined ? setNotes([]) : setNotes([...notesArr]);
+    } else false;
+  }, []);
+
+  const saveNote = () => {
+    notes === undefined ? setNotes(note) : setNotes([note, ...notes]);
+    const obj = {
+      ...JSON.parse(localStorage.getItem("notesData")),
+      [data?.location?.name]: [note, ...notes],
+    };
+    if (typeof window !== undefined) {
+      window.localStorage.setItem("notesData", JSON.stringify(obj));
+    } else false;
+    setShwInput(false);
+    setNote("");
+  };
+  const onDelete = (note) => {
+    const newData = notes.filter((item) => {
+      if (item !== note) {
+        return {
+          ...item,
+        };
+      }
+    });
+    setNotes(newData);
+    const obj = {
+      ...JSON.parse(localStorage.getItem("notesData")),
+      [data?.location?.name]: newData,
+    };
+    if (typeof window !== undefined) {
+      window.localStorage.setItem("notesData", JSON.stringify(obj));
+    } else false;
+  };
   return (
     <section>
       <div className="cbg-grad detail-hero">
@@ -37,6 +95,90 @@ const Details = () => {
               </span>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="cw-90p">
+        <h2 className="detail-head">Details</h2>
+        <div className="card-org">
+          <DetailCard
+            Icon={<Bezier color="#3C6EEF" size={24} />}
+            sub={"Feels Like"}
+            title={data?.current.feelslike_c + "℃"}
+          />
+          <DetailCard
+            Icon={<DeviceMessage color="#3C6EEF" size={24} />}
+            sub={"Gust"}
+            title={data?.current.gust_kph + "kph"}
+          />
+
+          <DetailCard
+            Icon={<Electricity color="#3C6EEF" size={24} />}
+            sub={"Humidity"}
+            title={data?.current.gust_kph}
+          />
+          <DetailCard
+            Icon={<FlashSlash color="#3C6EEF" size={24} />}
+            sub={"Precipitation"}
+            title={data?.current.gust_kph + "In"}
+          />
+          <DetailCard
+            Icon={<Hierarchy color="#3C6EEF" size={24} />}
+            sub={"Pressure"}
+            title={data?.current.pressure_in + "In"}
+          />
+          <DetailCard
+            Icon={<Sun color="#3C6EEF" size={24} />}
+            sub={"UV"}
+            title={data?.current.uv + "In"}
+          />
+          <DetailCard
+            Icon={<Eye color="#3C6EEF" size={24} />}
+            sub={"Visibility"}
+            title={data?.current.vis_km + "km"}
+          />
+          <DetailCard
+            Icon={<Wind color="#3C6EEF" size={24} />}
+            sub={"Wind degree"}
+            title={data?.current.wind_degree + "℃"}
+          />
+          <DetailCard
+            Icon={<Wind2 color="#3C6EEF" size={24} />}
+            sub={"Wind direction"}
+            title={data?.current.wind_dir}
+          />
+          <DetailCard
+            Icon={<WifiSquare color="#3C6EEF" size={24} />}
+            sub={"Wind"}
+            title={data?.current.wind_kph + " kph"}
+          />
+        </div>
+        <div>
+          {notes &&
+            notes.map((note, i) => (
+              <div key={i} className="note-card">
+                <Note size={15} className="absolute cl-8" />
+                <CloseCircle
+                  onClick={() => onDelete(note)}
+                  size={15}
+                  className="absolute cr-8 pointer"
+                />
+                {note}
+              </div>
+            ))}
+          {shwInput && (
+            <textarea
+              // onBlur={() => setShwInput(false)}
+              onChange={(e) => setNote(e.target.value)}
+              value={note}
+            ></textarea>
+          )}
+          {}
+          <Button
+            onClick={() => {
+              shwInput ? saveNote() : setShwInput(true);
+            }}
+            label={shwInput ? "Save" : "Add Note"}
+          />
         </div>
       </div>
     </section>

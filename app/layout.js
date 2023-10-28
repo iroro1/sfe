@@ -58,7 +58,6 @@ export default function RootLayout({ children }) {
     loadLocation();
   }, []);
 
-  console.log(location, topCities);
   return (
     <html lang="en">
       <body className={inter.className}>
