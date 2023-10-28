@@ -108,7 +108,7 @@ const CityList = () => {
       </div>
       <div className="tab">
         {favoriteList()?.map((city, i) => (
-          <div className="cmb-18 ">
+          <div key={i} className="cmb-18 ">
             <WeatherCard
               favClick={() => onFav(city?.location?.name)}
               deleteClick={() => onDelete(city?.location?.name)}
@@ -129,7 +129,7 @@ const CityList = () => {
       </div>
       <div className="tab">
         {notFavoriteList()?.map((city, i) => (
-          <div className="cmb-18 ">
+          <div key={i} className="cmb-18 ">
             <WeatherCard
               favClick={() => onFav(city?.location?.name)}
               deleteClick={() => onDelete(city?.location?.name)}

@@ -33,7 +33,7 @@ const Details = () => {
       console.log(notesArr);
       notesArr === undefined ? setNotes([]) : setNotes([...notesArr]);
     } else false;
-  }, []);
+  }, [data?.location?.name]);
 
   const saveNote = () => {
     notes === undefined ? setNotes(note) : setNotes([note, ...notes]);
