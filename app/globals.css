@@ -2,3 +2,166 @@
 @tailwind components;
 @tailwind utilities;
 
+.cmb-18 {
+  margin-bottom: 18px;
+}
+.cmt-21 {
+  margin-top: 21px;
+}
+.cmt-30 {
+  margin-top: 40px;
+}
+.cmt-40 {
+  margin-top: 40px;
+}
+.cbg-grad {
+  background: linear-gradient(100deg, #c351aa 0%, rgba(144, 30, 233, 0.69) 100%),
+    linear-gradient(100deg, #c351aa 0%, rgba(144, 30, 233, 0.69) 100%);
+}
+.ctc {
+  text-align: center;
+  justify-content: center;
+}
+.cmin-h-screen {
+  min-height: 100vh;
+}
+.cpx-24 {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.cpx-30 {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.mt--30 {
+  margin-top: -30px;
+}
+.cmb-30 {
+  margin-bottom: 30px;
+}
+.cpy-29 {
+  padding-top: 29px;
+  padding-bottom: 29px;
+}
+
+.fs-28 {
+  font-size: 28px;
+}
+.fs-25 {
+  font-size: 25px;
+}
+
+.cflex {
+  display: flex;
+}
+.citems-center {
+  align-items: center;
+}
+.cjustify-center {
+  justify-content: center;
+}
+.cfd-col {
+  flex-direction: column;
+}
+.cmx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.ch-100 {
+  height: 100px;
+}
+.cw-160 {
+  width: 160px;
+}
+/* Home */
+.home-text {
+  color: #080713;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.home-reload {
+  margin-top: 30px;
+  color: #333241;
+  font-size: 14px;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+/* card */
+.wcard-container {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 16px;
+  height: 144px;
+  width: 338px;
+  color: #fff;
+  border-radius: 10px;
+}
+.wcard-lhs {
+  position: relative;
+  width: 50%;
+  height: 100%;
+}
+
+.wcard-lhs-span {
+  position: absolute;
+  bottom: 0;
+}
+
+.wcard-rhs {
+  position: relative;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wcard-rhs-top {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 18px;
+  font-weight: 400;
+}
+.wcard-rhs-bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* Detail */
+.detail-hero {
+  height: 301px;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+.detail-main-text {
+  font-size: 24px;
+  font-weight: 700;
+}
+.detail-sub-text {
+  font-size: 16;
+  font-weight: 500;
+}
+
+.detail-sum {
+  width: 130px;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 7px;
+  text-align: left;
+}
+.detail-temp {
+  width: 130px;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: left;
+}
