@@ -10,8 +10,10 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
   const [location, setLocation] = useState();
   const [topCities, setTopCities] = useState();
+  const [load, setLoad] = useState(false);
 
   const loadLocation = () => {
+    setLoad(true);
     if (typeof window !== undefined) {
       const ctData = window.localStorage.getItem("citiyData");
       const uData = window.localStorage.getItem("userLocation");
@@ -22,36 +24,37 @@ export default function RootLayout({ children }) {
       }
       if (uData !== "") setLocation(JSON.parse(uData));
       else {
-        if ("geolocation" in navigator) {
-          // Retrieve latitude & longitude coordinates from `navigator.geolocation` Web API
-          navigator.geolocation.getCurrentPosition(async ({ coords }) => {
-            const { latitude, longitude } = coords;
-            const lat = latitude;
-            const lng = longitude;
-            try {
-              const { data: res } = await getWeatherApi(lat, lng);
-              if (res?.location && res?.current) {
-                typeof window !== undefined
-                  ? window.localStorage.setItem(
-                      "userLocation",
-                      JSON.stringify({
-                        location: res?.location,
-                        current: res?.current,
-                      })
-                    )
-                  : false;
-                setLocation({
-                  location: res?.location,
-                  current: res?.current,
-                });
-              }
-            } catch (error) {
-              console.log(error);
-            }
-          });
-        }
       }
     } else false;
+    if ("geolocation" in navigator) {
+      // Retrieve latitude & longitude coordinates from `navigator.geolocation` Web API
+      navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+        const { latitude, longitude } = coords;
+        const lat = latitude;
+        const lng = longitude;
+        try {
+          const { data: res } = await getWeatherApi(lat, lng);
+          if (res?.location && res?.current) {
+            typeof window !== undefined
+              ? window.localStorage.setItem(
+                  "userLocation",
+                  JSON.stringify({
+                    location: res?.location,
+                    current: res?.current,
+                  })
+                )
+              : false;
+            setLocation({
+              location: res?.location,
+              current: res?.current,
+            });
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    }
+    setLoad(false);
   };
 
   useEffect(() => {
@@ -61,7 +64,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider store={store}>{children}</Provider>
+        <Provider store={store}>
+          {load ? <span>Loading</span> : children}
+        </Provider>
       </body>
     </html>
   );

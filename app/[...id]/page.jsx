@@ -103,53 +103,53 @@ const Details = () => {
           <DetailCard
             Icon={<Bezier color="#3C6EEF" size={24} />}
             sub={"Feels Like"}
-            title={data?.current.feelslike_c + "℃"}
+            title={data?.current?.feelslike_c + "℃"}
           />
           <DetailCard
             Icon={<DeviceMessage color="#3C6EEF" size={24} />}
             sub={"Gust"}
-            title={data?.current.gust_kph + "kph"}
+            title={data?.current?.gust_kph + "kph"}
           />
 
           <DetailCard
             Icon={<Electricity color="#3C6EEF" size={24} />}
             sub={"Humidity"}
-            title={data?.current.gust_kph}
+            title={data?.current?.gust_kph}
           />
           <DetailCard
             Icon={<FlashSlash color="#3C6EEF" size={24} />}
             sub={"Precipitation"}
-            title={data?.current.gust_kph + "In"}
+            title={data?.current?.gust_kph + "In"}
           />
           <DetailCard
             Icon={<Hierarchy color="#3C6EEF" size={24} />}
             sub={"Pressure"}
-            title={data?.current.pressure_in + "In"}
+            title={data?.current?.pressure_in + "In"}
           />
           <DetailCard
             Icon={<Sun color="#3C6EEF" size={24} />}
             sub={"UV"}
-            title={data?.current.uv + "In"}
+            title={data?.current?.uv + "In"}
           />
           <DetailCard
             Icon={<Eye color="#3C6EEF" size={24} />}
             sub={"Visibility"}
-            title={data?.current.vis_km + "km"}
+            title={data?.current?.vis_km + "km"}
           />
           <DetailCard
             Icon={<Wind color="#3C6EEF" size={24} />}
             sub={"Wind degree"}
-            title={data?.current.wind_degree + "℃"}
+            title={data?.current?.wind_degree + "℃"}
           />
           <DetailCard
             Icon={<Wind2 color="#3C6EEF" size={24} />}
             sub={"Wind direction"}
-            title={data?.current.wind_dir}
+            title={data?.current?.wind_dir}
           />
           <DetailCard
             Icon={<WifiSquare color="#3C6EEF" size={24} />}
             sub={"Wind"}
-            title={data?.current.wind_kph + " kph"}
+            title={data?.current?.wind_kph + " kph"}
           />
         </div>
         <div>
