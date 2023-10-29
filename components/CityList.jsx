@@ -68,7 +68,6 @@ const CityList = () => {
         if (status === 200) setTopCities(data);
       }
       if (uData !== "") setLocation(JSON.parse(uData));
-      window.location.reload();
     } else false;
 
     setLoad(false);
