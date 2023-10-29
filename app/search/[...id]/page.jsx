@@ -1,5 +1,6 @@
 "use client";
-import DetailCard from "../../components/DetailCard";
+import React from "react";
+import DetailCard from "../../../components/DetailCard";
 import {
   Bezier,
   CloseCircle,

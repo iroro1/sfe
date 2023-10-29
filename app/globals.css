@@ -145,6 +145,7 @@
   height: 174px;
   color: #fff;
   border-radius: 10px;
+  cursor: pointer;
 }
 .wcard-container:hover {
   transition: all ease-in-out 500ms;

@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import Button from "../../components/Button";
 import DetailCard from "../../components/DetailCard";
 import {
