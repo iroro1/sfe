@@ -127,9 +127,11 @@ const CityList = () => {
         )}
       </div>
 
-      <div>
-        <h2 className="detail-head">Favorites</h2>
-      </div>
+      {favoriteList().length > 0 && (
+        <div>
+          <h2 className="detail-head">Favorites</h2>
+        </div>
+      )}
       <div className="tab">
         {favoriteList()?.map((city, i) => (
           <div key={i} className="cmb-18 ">

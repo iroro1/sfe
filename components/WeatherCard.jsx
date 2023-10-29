@@ -7,7 +7,7 @@ const WeatherCard = ({ data, onClick, favClick, deleteClick, load }) => {
   return load ? (
     <section className="load"></section>
   ) : (
-    <section className="cbg-grad wcard-container cmin-w-full ">
+    <section className="cbg-grad wcard-container  ">
       <div onClick={onClick} className="wcard-lhs">
         <h4>{data?.location?.country || "United states"}</h4>
         <h1 className="fs-25">{data?.location?.name || "California"}</h1>
