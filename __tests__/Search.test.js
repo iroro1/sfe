@@ -50,28 +50,27 @@ describe("Search Component", () => {
     });
   });
 
-    getWeatherApi.mockResolvedValue({
-      data: {
-        location: { name: "Tokyo" },
-        // Add more data as needed
-      },
-    });
-
-    render(<Search />);
-
-    const searchButton = screen.getByTestId("search-button");
-    fireEvent.click(searchButton);
-
-    // Wait for the results to be displayed
-    await waitFor(() => {
-      expect(screen.getByText("Tokyo")).toBeInTheDocument();
-    });
-
-    // Click the close button
-    const closeButton = screen.getByTestId("close-button");
-    fireEvent.click(closeButton);
-
-    // Check that the results are cleared
-    expect(screen.queryByText("Tokyo")).toBeNull();
+  getWeatherApi.mockResolvedValue({
+    data: {
+      location: { name: "Tokyo" },
+      // Add more data as needed
+    },
   });
+
+  render(<Search />);
+
+  const searchButton = screen.getByTestId("search-button");
+  fireEvent.click(searchButton);
+
+  // Wait for the results to be displayed
+  waitFor(() => {
+    expect(screen.getByText("Tokyo")).toBeInTheDocument();
+  });
+
+  // Click the close button
+  const closeButton = screen.getByTestId("close-button");
+  fireEvent.click(closeButton);
+
+  // Check that the results are cleared
+  expect(screen.queryByText("Tokyo")).toBeNull();
 });
