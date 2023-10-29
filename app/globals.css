@@ -143,6 +143,11 @@
   color: #fff;
   border-radius: 10px;
 }
+.wcard-container:hover {
+  transition: all ease-in-out 500ms;
+  transform: scale(1.03);
+  /* transform: translateX(-100px); */
+}
 .load {
   display: flex;
   justify-content: space-between;

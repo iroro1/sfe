@@ -10,40 +10,33 @@ import WeatherCardUser from "./WeatherCardUser";
 const CityList = () => {
   const [weather, setWeather] = useState([]);
   const [load, setLoad] = useState(true);
-  const [loaded, setLoaded] = useState(false);
   const [userWeather, setUserWeather] = useState({});
-  const [location, setLocation] = useState();
-  const [topCities, setTopCities] = useState();
 
   useEffect(() => {
     loadLocation();
-  }, []);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoad(false);
-    }, 6000);
-  }, []);
-  useEffect(() => {
-    setLoad(true);
     if (typeof window !== undefined) {
       setWeather(JSON.parse(window.localStorage.getItem("citiyData")));
       setUserWeather(JSON.parse(window.localStorage.getItem("userLocation")));
     } else false;
   }, []);
+
   const loadLocation = async () => {
     setLoad(true);
-    await getTopCitiesApi();
+    const res = await getTopCitiesApi();
+    setWeather(res);
     if ("geolocation" in navigator) {
-      setLoad(true);
       // Retrieve latitude & longitude coordinates from `navigator.geolocation` Web API
       navigator.geolocation.getCurrentPosition(async ({ coords }) => {
         const { latitude, longitude } = coords;
         const lat = latitude;
         const lng = longitude;
-        // setLoad(true);
         try {
           const { data: res } = await getWeatherApi(lat, lng);
           if (res?.location && res?.current) {
+            setUserWeather({
+              location: res?.location,
+              current: res?.current,
+            });
             typeof window !== undefined
               ? window.localStorage.setItem(
                   "userLocation",
@@ -59,16 +52,6 @@ const CityList = () => {
         }
       });
     }
-    if (typeof window !== undefined) {
-      const ctData = window.localStorage.getItem("citiyData");
-      const uData = window.localStorage.getItem("userLocation");
-      if (ctData !== "") setTopCities(JSON.parse(ctData));
-      else {
-        const { status, data } = getTopCitiesApi();
-        if (status === 200) setTopCities(data);
-      }
-      if (uData !== "") setLocation(JSON.parse(uData));
-    } else false;
 
     setLoad(false);
   };
@@ -110,10 +93,10 @@ const CityList = () => {
   const notFavoriteList = () => {
     return weather?.filter((item) => !item?.isFav);
   };
-  return load ? (
+  return userWeather?.location?.name === undefined ? (
     <main>
       {" "}
-      <h6>Loaing</h6>
+      <h6>Loading...</h6>
     </main>
   ) : (
     <main>
@@ -122,7 +105,7 @@ const CityList = () => {
         <Refresh size={14} className={load && "animate-spin"} />
       </div>
       <div className="main-card">
-        {!load && (
+        {!load && notFavoriteList()?.length > 0 && (
           <WeatherCardUser
             load={load}
             data={userWeather}
