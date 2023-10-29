@@ -68,37 +68,9 @@ const CityList = () => {
         if (status === 200) setTopCities(data);
       }
       if (uData !== "") setLocation(JSON.parse(uData));
-      else {
-      }
+      window.location.reload();
     } else false;
-    // if ("geolocation" in navigator) {
-    //   // Retrieve latitude & longitude coordinates from `navigator.geolocation` Web API
-    //   navigator.geolocation.getCurrentPosition(async ({ coords }) => {
-    //     const { latitude, longitude } = coords;
-    //     const lat = latitude;
-    //     const lng = longitude;
-    //     try {
-    //       const { data: res } = await getWeatherApi(lat, lng);
-    //       if (res?.location && res?.current) {
-    //         typeof window !== undefined
-    //           ? window.localStorage.setItem(
-    //               "userLocation",
-    //               JSON.stringify({
-    //                 location: res?.location,
-    //                 current: res?.current,
-    //               })
-    //             )
-    //           : false;
-    //         setLocation({
-    //           location: res?.location,
-    //           current: res?.current,
-    //         });
-    //       }
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   });
-    // }
+
     setLoad(false);
   };
 
