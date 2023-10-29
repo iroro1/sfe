@@ -47,11 +47,15 @@ export const getTopCitiesApi = async () => {
         "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
       },
     };
-    const { data: res } = await axios.request(options);
-    cityData.push({
-      location: res?.location,
-      current: res?.current,
-    });
+    try {
+      const { data: res } = await axios?.request(options);
+      cityData.push({
+        location: res?.location,
+        current: res?.current,
+      });
+    } catch (error) {
+      return "Network error";
+    }
   }
 
   if (typeof window !== undefined) {

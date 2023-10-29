@@ -49,6 +49,7 @@ const Search = () => {
             onChange={(e) => {
               setQ(e.target.value);
             }}
+            value={q}
             onKeyDown={(e) => e.key === "Enter" && searchFn()}
             style={{
               border: "1px solid #999",
@@ -60,7 +61,14 @@ const Search = () => {
             placeholder="Search term"
           />
         )}
-        {show && <CloseCircle onClick={() => setResults([])} />}
+        {show && (
+          <CloseCircle
+            onClick={() => {
+              setResults([]);
+              setQ("");
+            }}
+          />
+        )}
         <SearchFavorite className="cml-10" onClick={() => setShow(!show)} />
       </div>
       {show && (

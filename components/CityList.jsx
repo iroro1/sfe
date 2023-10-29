@@ -23,34 +23,41 @@ const CityList = () => {
   const loadLocation = async () => {
     setLoad(true);
     const res = await getTopCitiesApi();
-    setWeather(res);
-    if ("geolocation" in navigator) {
-      // Retrieve latitude & longitude coordinates from `navigator.geolocation` Web API
-      navigator.geolocation.getCurrentPosition(async ({ coords }) => {
-        const { latitude, longitude } = coords;
-        const lat = latitude;
-        const lng = longitude;
-        try {
-          const { data: res } = await getWeatherApi(lat, lng);
-          if (res?.location && res?.current) {
-            setUserWeather({
-              location: res?.location,
-              current: res?.current,
-            });
-            typeof window !== undefined
-              ? window.localStorage.setItem(
-                  "userLocation",
-                  JSON.stringify({
-                    location: res?.location,
-                    current: res?.current,
-                  })
-                )
-              : false;
+    if (res === "Network error") {
+      if (typeof window !== undefined) {
+        setWeather(JSON.parse(window.localStorage.getItem("citiyData")));
+        setUserWeather(JSON.parse(window.localStorage.getItem("userLocation")));
+      }
+    } else {
+      setWeather(res);
+      if ("geolocation" in navigator) {
+        // Retrieve latitude & longitude coordinates from `navigator.geolocation` Web API
+        navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+          const { latitude, longitude } = coords;
+          const lat = latitude;
+          const lng = longitude;
+          try {
+            const { data: res } = await getWeatherApi(lat, lng);
+            if (res?.location && res?.current) {
+              setUserWeather({
+                location: res?.location,
+                current: res?.current,
+              });
+              typeof window !== undefined
+                ? window.localStorage.setItem(
+                    "userLocation",
+                    JSON.stringify({
+                      location: res?.location,
+                      current: res?.current,
+                    })
+                  )
+                : false;
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
-        }
-      });
+        });
+      }
     }
 
     setLoad(false);
