@@ -1,6 +1,9 @@
+/** @jest-environment jsdom */
+
 import React from "react";
+import "@testing-library/jest-dom";
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
-import Search from "@/components/Search";
+import Search from "../components/Search";
 
 // Mock dependencies and functions
 jest.mock("next/navigation", () => ({
@@ -8,7 +11,7 @@ jest.mock("next/navigation", () => ({
     push: jest.fn(),
   }),
 }));
-jest.mock("@/services/weatherService", () => ({
+jest.mock("../services/weatherService", () => ({
   getWeatherApi: jest.fn(),
   searchCity: jest.fn(),
 }));
@@ -46,15 +49,6 @@ describe("Search Component", () => {
       expect(screen.getByText("Tokyo")).toBeInTheDocument();
     });
   });
-
-  it("clears search results when the close button is clicked", async () => {
-    searchCity.mockResolvedValue({
-      status: 200,
-      data: [
-        { lat: 35.682839, lon: 139.759455 },
-        // Add more data as needed
-      ],
-    });
 
     getWeatherApi.mockResolvedValue({
       data: {

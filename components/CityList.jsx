@@ -1,6 +1,7 @@
 "use client";
-import { sortObject } from "@/services/functions";
-import { getTopCitiesApi, getWeatherApi } from "@/services/weatherService";
+import React from "react";
+import { sortObject } from "../services/functions";
+import { getTopCitiesApi, getWeatherApi } from "../services/weatherService";
 import { Refresh } from "iconsax-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -59,7 +60,6 @@ const CityList = () => {
         });
       }
     }
-
     setLoad(false);
   };
 

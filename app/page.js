@@ -1,5 +1,6 @@
-import CityList from "@/components/CityList";
-import Search from "@/components/Search";
+import React from "react";
+import CityList from "../components/CityList";
+import Search from "../components/Search";
 
 export const metadata = {
   title: "SFE- Weather App",

@@ -1,4 +1,7 @@
-import Button from "@/components/Button";
+/** @jest-environment jsdom */
+import React from "react";
+import "@testing-library/jest-dom";
+import Button from "../components/Button";
 import { fireEvent, render } from "@testing-library/react";
 
 describe("Button Component", () => {
@@ -9,7 +12,6 @@ describe("Button Component", () => {
     const { getByText, container } = render(
       <Button label={label} classes={classes} />
     );
-
     // Check if the button is rendered with the correct label and classes
     expect(getByText(label)).toBeInTheDocument();
     expect(container.querySelector(".c-button.btn-primary")).not.toBeNull();

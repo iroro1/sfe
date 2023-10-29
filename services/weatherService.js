@@ -1,4 +1,4 @@
-import { cities } from "@/data";
+import { cities } from "../data";
 import axios from "axios";
 
 export const getWeatherApi = async (lat, lng) => {

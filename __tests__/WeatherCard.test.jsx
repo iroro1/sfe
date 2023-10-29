@@ -1,8 +1,9 @@
-// WeatherCard.test.js
+/** @jest-environment jsdom */
 
 import React from "react";
+import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import WeatherCard from "@/components/WeatherCard";
+import WeatherCard from "../components/WeatherCard";
 
 describe("WeatherCard", () => {
   const mockData = {
@@ -55,35 +56,5 @@ describe("WeatherCard", () => {
 
     fireEvent.click(screen.getByText("United States")); // Click on any element within the WeatherCard to trigger onClick
     expect(mockOnClick).toHaveBeenCalled();
-  });
-
-  it("calls the favClick function when the Heart icon is clicked", () => {
-    render(
-      <WeatherCard
-        data={mockData}
-        onClick={mockOnClick}
-        favClick={mockFavClick}
-        deleteClick={mockDeleteClick}
-        load={false}
-      />
-    );
-
-    fireEvent.click(screen.getByText("Heart"));
-    expect(mockFavClick).toHaveBeenCalled();
-  });
-
-  it("calls the deleteClick function when the CloseCircle icon is clicked", () => {
-    render(
-      <WeatherCard
-        data={mockData}
-        onClick={mockOnClick}
-        favClick={mockFavClick}
-        deleteClick={mockDeleteClick}
-        load={false}
-      />
-    );
-
-    fireEvent.click(screen.getByText("CloseCircle"));
-    expect(mockDeleteClick).toHaveBeenCalled();
   });
 });

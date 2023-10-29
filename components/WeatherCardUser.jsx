@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import Image from "next/image";
 
 const WeatherCardUser = ({ data, onClick }) => {
@@ -26,7 +27,7 @@ const WeatherCardUser = ({ data, onClick }) => {
               "http:" + data?.current?.condition?.icon
             }
           />
-          {data?.current?.temp_c + "℃" || "5℃"}
+          {data?.current?.temp_c ? data?.current?.temp_c + "℃" : "5℃"}
         </div>
       </div>
     </section>

@@ -1,6 +1,8 @@
+/** @jest-environment jsdom */
 import React from "react";
+import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import WeatherCardUser from "@/components/WeatherCardUser";
+import WeatherCardUser from "../components/WeatherCardUser";
 
 describe("WeatherCardUser Component", () => {
   it("renders with default values when data is not provided", () => {

@@ -1,6 +1,7 @@
 "use client";
-import { CloseCircle, Heart } from "iconsax-react";
+import { CloseCircle } from "iconsax-react";
 import Image from "next/image";
+import React from "react";
 
 const WeatherCardSearch = ({ data, onClick, deleteClick, load }) => {
   return load ? (

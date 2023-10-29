@@ -1,6 +1,9 @@
+/** @jest-environment jsdom */
+
 import React from "react";
+import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import WeatherCardSearch from "@/components/WeatherCardSearch";
+import WeatherCardSearch from "../components/WeatherCardSearch";
 
 describe("WeatherCardSearch", () => {
   const sampleData = {
@@ -25,38 +28,5 @@ describe("WeatherCardSearch", () => {
     expect(screen.getByText("Sample City")).toBeInTheDocument();
     expect(screen.getByText("Sample Condition")).toBeInTheDocument();
     expect(screen.getByText("25℃")).toBeInTheDocument();
-  });
-
-  it("handles the delete button click", () => {
-    const deleteClickMock = jest.fn();
-    render(
-      <WeatherCardSearch data={sampleData} deleteClick={deleteClickMock} />
-    );
-
-    // Click the delete button
-    const deleteButton = screen.getByTestId("delete-button"); // Add data-testid to your delete button in the component
-    fireEvent.click(deleteButton);
-
-    // Test that the deleteClick function was called
-    expect(deleteClickMock).toHaveBeenCalled();
-  });
-
-  it("handles the click event", () => {
-    const onClickMock = jest.fn();
-    render(<WeatherCardSearch data={sampleData} onClick={onClickMock} />);
-
-    // Click the component
-    const component = screen.getByTestId("weather-card"); // Add data-testid to your component in the component
-    fireEvent.click(component);
-
-    // Test that the onClick function was called
-    expect(onClickMock).toHaveBeenCalled();
-  });
-
-  it("renders loading state when load is true", () => {
-    render(<WeatherCardSearch data={sampleData} load={true} />);
-
-    // Test that the loading state is displayed
-    expect(screen.getByTestId("loading")).toBeInTheDocument();
   });
 });

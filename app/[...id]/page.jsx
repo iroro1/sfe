@@ -1,6 +1,6 @@
 "use client";
-import Button from "@/components/Button";
-import DetailCard from "@/components/DetailCard";
+import Button from "../../components/Button";
+import DetailCard from "../../components/DetailCard";
 import {
   Bezier,
   CloseCircle,

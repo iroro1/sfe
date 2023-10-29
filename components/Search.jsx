@@ -1,8 +1,9 @@
 "use client";
-import { getWeatherApi, searchCity } from "@/services/weatherService";
-import { CloseCircle, SearchFavorite, SearchNormal } from "iconsax-react";
+import React from "react";
+import { CloseCircle, SearchNormal } from "iconsax-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { getWeatherApi, searchCity } from "../services/weatherService";
 import WeatherCardSearch from "./WeatherCardSearch";
 
 const Search = () => {

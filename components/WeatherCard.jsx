@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { CloseCircle, Heart } from "iconsax-react";
 import Image from "next/image";
 
