@@ -16,14 +16,16 @@ const Search = () => {
       const res = await searchCity(q);
       if (res.status === 200) {
         console.log(res);
+        let re = [];
         for (let i = 0; i < res.data.length; i++) {
           const weather = await getWeatherApi(
             res?.data[i]?.lat,
             res?.data[i]?.lon
           );
           console.log(weather);
-          setResults([...results, weather.data]);
+          re.push(weather?.data);
         }
+        setResults(re);
       }
     } catch (error) {
       console.log(error);
@@ -79,15 +81,17 @@ const Search = () => {
             left: 0,
             zIndex: 1000,
             background: "#fff",
-            width: "90%",
+            width: "100%",
             minHeight: "200px",
-            marginLeft: "5%",
             display: "flex",
-            flexDirection: "column",
             gap: "20px",
             borderBottom: "9px solid purple",
             paddingBottom: "10px",
+            padding: "20px",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
           }}
+          className="tab"
         >
           {results.map((r, i) => (
             <WeatherCardSearch
