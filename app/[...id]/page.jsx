@@ -26,10 +26,10 @@ const Details = () => {
   const [shwInput, setShwInput] = useState(false);
   useEffect(() => {
     if (typeof window !== undefined) {
-      const notesArr = JSON.parse(localStorage.getItem("notesData"))[
-        data?.location?.name
-      ];
-      notesArr === undefined ? setNotes([]) : setNotes([...notesArr]);
+      const notesArr = JSON.parse(localStorage.getItem("notesData"));
+      notesArr === null
+        ? setNotes([])
+        : setNotes([...notesArr[data?.location?.name]]);
     } else false;
   }, [data?.location?.name]);
 

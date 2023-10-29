@@ -1,6 +1,6 @@
 "use client";
 import { getWeatherApi, searchCity } from "@/services/weatherService";
-import { SearchFavorite } from "iconsax-react";
+import { CloseCircle, SearchFavorite } from "iconsax-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import WeatherCardSearch from "./WeatherCardSearch";
@@ -14,14 +14,12 @@ const Search = () => {
     try {
       const res = await searchCity(q);
       if (res.status === 200) {
-        console.log(res);
         let re = [];
         for (let i = 0; i < res.data.length; i++) {
           const weather = await getWeatherApi(
             res?.data[i]?.lat,
             res?.data[i]?.lon
           );
-          console.log(weather);
           re.push(weather?.data);
         }
         setResults(re);
@@ -48,7 +46,9 @@ const Search = () => {
       <div className="absolute search">
         {show && (
           <input
-            onChange={(e) => setQ(e.target.value)}
+            onChange={(e) => {
+              setQ(e.target.value);
+            }}
             onKeyDown={(e) => e.key === "Enter" && searchFn()}
             style={{
               border: "1px solid #999",
@@ -60,7 +60,8 @@ const Search = () => {
             placeholder="Search term"
           />
         )}
-        <SearchFavorite onClick={() => setShow(!show)} />
+        {show && <CloseCircle onClick={() => setResults([])} />}
+        <SearchFavorite className="cml-10" onClick={() => setShow(!show)} />
       </div>
       {show && (
         <div className="tab search-dd">
