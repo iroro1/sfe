@@ -1,6 +1,5 @@
 "use client";
-import Button from "@/components/Button";
-import DetailCard from "@/components/DetailCard";
+import DetailCard from "../../components/DetailCard";
 import {
   Bezier,
   CloseCircle,
@@ -17,7 +16,7 @@ import {
 } from "iconsax-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Details = () => {
   const data = JSON.parse(useSearchParams().getAll("params"));
