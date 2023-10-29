@@ -1,6 +1,6 @@
 "use client";
 import { getWeatherApi, searchCity } from "@/services/weatherService";
-import { CloseCircle, SearchFavorite } from "iconsax-react";
+import { CloseCircle, SearchFavorite, SearchNormal } from "iconsax-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import WeatherCardSearch from "./WeatherCardSearch";
@@ -63,13 +63,18 @@ const Search = () => {
         )}
         {show && (
           <CloseCircle
+            color="#aa0000"
             onClick={() => {
               setResults([]);
               setQ("");
+              setShow(false);
             }}
           />
         )}
-        <SearchFavorite className="cml-10" onClick={() => setShow(!show)} />
+        <SearchNormal
+          className="cml-10"
+          onClick={() => (show ? searchFn() : setShow(true))}
+        />
       </div>
       {show && (
         <div className="tab search-dd">
