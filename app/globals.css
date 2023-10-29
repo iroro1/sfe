@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.container {
+  width: 90%;
+  margin: auto;
+}
 .cmb-18 {
   margin-bottom: 18px;
 }
@@ -99,6 +103,7 @@
   align-items: center;
   cursor: pointer;
 }
+
 /* card */
 .wcard-container {
   display: flex;
@@ -106,7 +111,6 @@
   position: relative;
   padding: 16px;
   height: 174px;
-  width: 338px;
   color: #fff;
   border-radius: 10px;
 }
