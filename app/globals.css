@@ -103,7 +103,33 @@
   align-items: center;
   cursor: pointer;
 }
-
+.cmax-400 {
+  max-width: 400px;
+}
+.search {
+  right: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+}
+.search-dd {
+  position: absolute;
+  top: 150px;
+  left: 0;
+  z-index: 1000;
+  background: #fff;
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  gap: 20px;
+  border-bottom: 9px solid purple;
+  padding-bottom: 10px;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 /* card */
 .wcard-container {
   display: flex;

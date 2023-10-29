@@ -24,15 +24,14 @@ const Details = () => {
   const [notes, setNotes] = useState([]);
   const [note, setNote] = useState("");
   const [shwInput, setShwInput] = useState(false);
-  // useEffect(() => {
-  //   if (typeof window !== undefined) {
-  //     const notesArr = JSON.parse(localStorage.getItem("notesData"))[
-  //       data?.location?.name
-  //     ];
-  //     console.log(notesArr);
-  //     notesArr === undefined ? setNotes([]) : setNotes([...notesArr]);
-  //   } else false;
-  // }, [data?.location?.name]);
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const notesArr = JSON.parse(localStorage.getItem("notesData"))[
+        data?.location?.name
+      ];
+      notesArr === undefined ? setNotes([]) : setNotes([...notesArr]);
+    } else false;
+  }, [data?.location?.name]);
 
   const saveNote = () => {
     notes === undefined ? setNotes(note) : setNotes([note, ...notes]);

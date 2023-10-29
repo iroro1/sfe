@@ -5,7 +5,7 @@ const WeatherCardUser = ({ data, onClick }) => {
   return (
     <section
       onClick={onClick}
-      className="cbg-grad wcard-container  cmb-30 topCard"
+      className="cbg-grad wcard-container  cmb-30 topCard cmax-400"
     >
       <div className="wcard-lhs">
         <h4>{data?.location?.country || "United states"}</h4>

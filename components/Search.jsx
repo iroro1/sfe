@@ -45,17 +45,7 @@ const Search = () => {
   }, [show]);
   return (
     <>
-      <div
-        style={{
-          right: "20px",
-          cursor: "pointer",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "#fff",
-        }}
-        className="absolute"
-      >
+      <div className="absolute search">
         {show && (
           <input
             onChange={(e) => setQ(e.target.value)}
@@ -73,25 +63,7 @@ const Search = () => {
         <SearchFavorite onClick={() => setShow(!show)} />
       </div>
       {show && (
-        <div
-          style={{
-            position: "absolute",
-            top: "150px",
-            left: 0,
-            zIndex: 1000,
-            background: "#fff",
-            width: "100%",
-            minHeight: "200px",
-            display: "flex",
-            gap: "20px",
-            borderBottom: "9px solid purple",
-            paddingBottom: "10px",
-            padding: "20px",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-          }}
-          className="tab"
-        >
+        <div className="tab search-dd">
           {results.map((r, i) => (
             <WeatherCardSearch
               deleteClick={() => onDelete(r?.location?.name)}
