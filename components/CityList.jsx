@@ -9,23 +9,38 @@ import WeatherCardUser from "./WeatherCardUser";
 
 const CityList = () => {
   const [weather, setWeather] = useState([]);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
+  const [loaded, setLoaded] = useState(false);
   const [userWeather, setUserWeather] = useState({});
+  const [location, setLocation] = useState();
+  const [topCities, setTopCities] = useState();
+
   useEffect(() => {
+    loadLocation();
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoad(false);
+    }, 6000);
+  }, []);
+  useEffect(() => {
+    setLoad(true);
     if (typeof window !== undefined) {
       setWeather(JSON.parse(window.localStorage.getItem("citiyData")));
       setUserWeather(JSON.parse(window.localStorage.getItem("userLocation")));
     } else false;
   }, []);
-  const loadLocation = () => {
+  const loadLocation = async () => {
     setLoad(true);
-    getTopCitiesApi();
+    await getTopCitiesApi();
     if ("geolocation" in navigator) {
+      setLoad(true);
       // Retrieve latitude & longitude coordinates from `navigator.geolocation` Web API
       navigator.geolocation.getCurrentPosition(async ({ coords }) => {
         const { latitude, longitude } = coords;
         const lat = latitude;
         const lng = longitude;
+        // setLoad(true);
         try {
           const { data: res } = await getWeatherApi(lat, lng);
           if (res?.location && res?.current) {
@@ -44,6 +59,46 @@ const CityList = () => {
         }
       });
     }
+    if (typeof window !== undefined) {
+      const ctData = window.localStorage.getItem("citiyData");
+      const uData = window.localStorage.getItem("userLocation");
+      if (ctData !== "") setTopCities(JSON.parse(ctData));
+      else {
+        const { status, data } = getTopCitiesApi();
+        if (status === 200) setTopCities(data);
+      }
+      if (uData !== "") setLocation(JSON.parse(uData));
+      else {
+      }
+    } else false;
+    // if ("geolocation" in navigator) {
+    //   // Retrieve latitude & longitude coordinates from `navigator.geolocation` Web API
+    //   navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+    //     const { latitude, longitude } = coords;
+    //     const lat = latitude;
+    //     const lng = longitude;
+    //     try {
+    //       const { data: res } = await getWeatherApi(lat, lng);
+    //       if (res?.location && res?.current) {
+    //         typeof window !== undefined
+    //           ? window.localStorage.setItem(
+    //               "userLocation",
+    //               JSON.stringify({
+    //                 location: res?.location,
+    //                 current: res?.current,
+    //               })
+    //             )
+    //           : false;
+    //         setLocation({
+    //           location: res?.location,
+    //           current: res?.current,
+    //         });
+    //       }
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   });
+    // }
     setLoad(false);
   };
 
@@ -84,23 +139,31 @@ const CityList = () => {
   const notFavoriteList = () => {
     return weather?.filter((item) => !item?.isFav);
   };
-  return (
+  return load ? (
+    <main>
+      {" "}
+      <h6>Loaing</h6>
+    </main>
+  ) : (
     <main>
       <div onClick={() => loadLocation()} className="cflex home-reload cmb-18">
         <span>Get Updated data</span>
         <Refresh size={14} className={load && "animate-spin"} />
       </div>
       <div className="main-card">
-        <WeatherCardUser
-          data={userWeather}
-          onClick={() =>
-            navigate.push(
-              `/${userWeather?.location?.tz_id}?params=${JSON.stringify(
-                userWeather
-              )}`
-            )
-          }
-        />
+        {!load && (
+          <WeatherCardUser
+            load={load}
+            data={userWeather}
+            onClick={() =>
+              navigate.push(
+                `/${userWeather?.location?.tz_id}?params=${JSON.stringify(
+                  userWeather
+                )}`
+              )
+            }
+          />
+        )}
       </div>
 
       <div>
@@ -110,6 +173,7 @@ const CityList = () => {
         {favoriteList()?.map((city, i) => (
           <div key={i} className="cmb-18 ">
             <WeatherCard
+              load={load}
               favClick={() => onFav(city?.location?.name)}
               deleteClick={() => onDelete(city?.location?.name)}
               key={i}
@@ -131,6 +195,7 @@ const CityList = () => {
         {notFavoriteList()?.map((city, i) => (
           <div key={i} className="cmb-18 ">
             <WeatherCard
+              load={load}
               favClick={() => onFav(city?.location?.name)}
               deleteClick={() => onDelete(city?.location?.name)}
               key={i}

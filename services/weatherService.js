@@ -54,9 +54,8 @@ export const getTopCitiesApi = async () => {
     });
   }
 
-  console.log(cityData);
-  typeof window !== undefined
-    ? window.localStorage.setItem("citiyData", JSON.stringify(cityData))
-    : false;
+  if (typeof window !== undefined) {
+    window.localStorage.setItem("citiyData", JSON.stringify(cityData));
+  } else false;
   return cityData;
 };

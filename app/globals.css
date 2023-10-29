@@ -110,6 +110,17 @@
   color: #fff;
   border-radius: 10px;
 }
+.load {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 16px;
+  height: 174px;
+  width: 338px;
+  color: #fff;
+  border-radius: 10px;
+  background: #eee;
+}
 .wcard-lhs {
   position: relative;
   width: 50%;

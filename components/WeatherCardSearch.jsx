@@ -2,7 +2,7 @@
 import { CloseCircle, Heart } from "iconsax-react";
 import Image from "next/image";
 
-const WeatherCard = ({ data, onClick, favClick, deleteClick, load }) => {
+const WeatherCardSearch = ({ data, onClick, deleteClick, load }) => {
   return load ? (
     <section className="load"></section>
   ) : (
@@ -31,16 +31,9 @@ const WeatherCard = ({ data, onClick, favClick, deleteClick, load }) => {
           />
           <p>{data?.current?.temp_c + "℃" || "5℃"}</p>
         </div>
-
-        <span className="wcard-rhs-bottom pointer">
-          <Heart
-            variant={!data?.isFav ? "Linear" : "Bold"}
-            onClick={() => favClick()}
-          />
-        </span>
       </div>
     </section>
   );
 };
 
-export default WeatherCard;
+export default WeatherCardSearch;
