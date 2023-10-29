@@ -1,31 +1,34 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
 import Button from "@/components/Button";
+import { fireEvent, render } from "@testing-library/react";
 
 describe("Button Component", () => {
-  it("renders the button with label and classes", () => {
+  it("renders the button with the provided label and classes", () => {
     const label = "Click me";
-    const classes = "custom-class";
+    const classes = "btn-primary";
 
-    render(<Button label={label} classes={classes} />);
+    const { getByText, container } = render(
+      <Button label={label} classes={classes} />
+    );
 
-    // Check if the button element with the label and custom class is present
-    const button = screen.getByText(label);
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveClass("c-button");
-    expect(button).toHaveClass(classes);
+    // Check if the button is rendered with the correct label and classes
+    expect(getByText(label)).toBeInTheDocument();
+    expect(container.querySelector(".c-button.btn-primary")).not.toBeNull();
   });
 
-  it("calls the onClick function when clicked", () => {
+  it("calls the onClick function when the button is clicked", () => {
+    const onClickMock = jest.fn();
     const label = "Click me";
-    const onClick = jest.fn(); // Mock the onClick function
 
-    render(<Button label={label} onClick={onClick} />);
+    const { getByText } = render(
+      <Button label={label} onClick={onClickMock} />
+    );
 
-    const button = screen.getByText(label);
+    const button = getByText(label);
+
+    // Simulate a click event on the button
     fireEvent.click(button);
 
     // Check if the onClick function was called
-    expect(onClick).toHaveBeenCalled();
+    expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 });

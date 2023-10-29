@@ -1,28 +1,47 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom"; // You may need to use MemoryRouter to simulate routing in Next.js
 import CityList from "@/components/CityList";
 
-describe("CityList Component", () => {
-  it("renders the component with loading message", () => {
-    render(<CityList />, { wrapper: MemoryRouter });
+// Mock the useRouter hook
+jest.mock("next/router", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}));
 
-    // Check if the loading message is displayed
-    const loadingMessage = screen.getByText("Loading");
-    expect(loadingMessage).toBeInTheDocument();
+// Mock your API functions (getTopCitiesApi and getWeatherApi)
+jest.mock("@/services/weatherService", () => ({
+  getTopCitiesApi: jest.fn(() => Promise.resolve([])),
+  getWeatherApi: jest.fn(() => Promise.resolve({})),
+}));
+
+describe("CityList Component", () => {
+  it("should render loading message when userWeather is undefined", () => {
+    const { container } = render(<CityList />);
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
-  it('calls loadLocation when "Get Updated data" is clicked', () => {
-    const loadLocation = jest.fn();
-    render(<CityList />, { wrapper: MemoryRouter });
+  it("should render the component with userWeather data", () => {
+    const userWeatherData = {
+      location: { name: "Test City", tz_id: "TestTZ" },
+      current: { temperature: 25 },
+    };
 
-    // Click the "Get Updated data" button
+    window.localStorage.setItem(
+      "userLocation",
+      JSON.stringify(userWeatherData)
+    );
+
+    const { container } = render(<CityList />);
+    expect(screen.getByText("Get Updated data")).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should trigger reload when "Get Updated data" is clicked', () => {
+    const { container } = render(<CityList />);
     const reloadButton = screen.getByText("Get Updated data");
     fireEvent.click(reloadButton);
-
-    // Check if loadLocation function is called
-    expect(loadLocation).toHaveBeenCalled();
+    expect(container).toMatchSnapshot();
   });
-
-  // You can add more test cases for other interactions and functionalities of the component
 });

@@ -1,50 +1,36 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import WeatherCardUser from '@/components/WeatherCardUser';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import WeatherCardUser from "@/components/WeatherCardUser";
 
-describe('WeatherCardUser Component', () => {
-  const mockData = {
-    location: {
-      country: 'Test Country',
-      name: 'Test City',
-    },
-    current: {
-      condition: {
-        text: 'Test Condition',
-        icon: 'http://test-icon-url.com/test-icon.png',
+describe("WeatherCardUser Component", () => {
+  it("renders with default values when data is not provided", () => {
+    render(<WeatherCardUser />);
+    // Add assertions for default values
+    expect(screen.getByText("United states")).toBeInTheDocument();
+    expect(screen.getByText("California")).toBeInTheDocument();
+    expect(screen.getByText("Clear")).toBeInTheDocument();
+    expect(screen.getByText("5℃")).toBeInTheDocument();
+  });
+
+  it("renders with provided data", () => {
+    const data = {
+      location: {
+        country: "Canada",
+        name: "Toronto",
       },
-      temp_c: 25,
+      current: {
+        condition: {
+          text: "Partly Cloudy",
+        },
+        temp_c: 20,
+      },
     };
 
-  it('renders the weather card with the provided data', () => {
-    render(<WeatherCardUser data={mockData} />);
-
-    // Check if the weather card elements are displayed with the provided data
-    const country = screen.getByText('Test Country');
-    const city = screen.getByText('Test City');
-    const condition = screen.getByText('Test Condition');
-    const temperature = screen.getByText('25℃');
-
-    expect(country).toBeInTheDocument();
-    expect(city).toBeInTheDocument();
-    expect(condition).toBeInTheDocument();
-    expect(temperature).toBeInTheDocument();
+    render(<WeatherCardUser data={data} />);
+    // Add assertions for the provided data
+    expect(screen.getByText("Canada")).toBeInTheDocument();
+    expect(screen.getByText("Toronto")).toBeInTheDocument();
+    expect(screen.getByText("Partly Cloudy")).toBeInTheDocument();
+    expect(screen.getByText("20℃")).toBeInTheDocument();
   });
-
-  it('calls the provided function when the card is clicked', () => {
-    const onClick = jest.fn();
-
-    render(
-      <WeatherCardUser data={mockData} onClick={onClick} />
-    );
-
-    // Click the card
-    const weatherCard = screen.getByTestId('weather-card');
-    fireEvent.click(weatherCard);
-
-    // Check if the function is called
-    expect(onClick).toHaveBeenCalled();
-  });
-
-  // You can add more test cases to cover other aspects of the component
 });

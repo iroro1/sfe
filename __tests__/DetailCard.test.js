@@ -3,30 +3,27 @@ import { render, screen } from "@testing-library/react";
 import DetailCard from "@/components/DetailCard";
 
 describe("DetailCard Component", () => {
-  it("renders the component with default props", () => {
+  it("renders with default values", () => {
     render(<DetailCard />);
 
-    // Check if the default title and sub props are displayed
-    const defaultTitle = screen.getByText("12%");
-    const defaultSub = screen.getByText("1%");
-
-    expect(defaultTitle).toBeInTheDocument();
-    expect(defaultSub).toBeInTheDocument();
+    // Use screen queries to find elements and assert their content
+    expect(screen.getByText("12%")).toBeInTheDocument(); // Default title
+    expect(screen.getByText("1%")).toBeInTheDocument(); // Default sub
   });
 
-  it("renders the component with provided title and sub", () => {
-    const customTitle = "Custom Title";
-    const customSub = "Custom Subtitle";
+  it("renders with custom values", () => {
+    render(<DetailCard title="Custom Title" sub="Custom Sub" />);
 
-    render(<DetailCard title={customTitle} sub={customSub} />);
-
-    // Check if the custom title and sub props are displayed
-    const customTitleElement = screen.getByText(customTitle);
-    const customSubElement = screen.getByText(customSub);
-
-    expect(customTitleElement).toBeInTheDocument();
-    expect(customSubElement).toBeInTheDocument();
+    // Use screen queries to find elements and assert their content
+    expect(screen.getByText("Custom Title")).toBeInTheDocument();
+    expect(screen.getByText("Custom Sub")).toBeInTheDocument();
   });
 
-  // You can add more test cases for other aspects of the component
+  it("renders with an icon", () => {
+    const icon = <svg data-testid="custom-icon">Your Icon</svg>;
+    render(<DetailCard Icon={icon} />);
+
+    // Use data-testid attribute to find the custom icon
+    expect(screen.getByTestId("custom-icon")).toBeInTheDocument();
+  });
 });

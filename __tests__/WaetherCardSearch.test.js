@@ -1,70 +1,62 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import WeatherCardSearch from '@/components/WeatherCardSearch';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import WeatherCardSearch from "@/components/WeatherCardSearch";
 
-describe('WeatherCardSearch Component', () => {
-  const mockData = {
+describe("WeatherCardSearch", () => {
+  const sampleData = {
     location: {
-      country: 'Test Country',
-      name: 'Test City',
+      country: "Sample Country",
+      name: "Sample City",
     },
     current: {
       condition: {
-        text: 'Test Condition',
+        text: "Sample Condition",
+        icon: "sample-icon-url",
       },
-      temp_c: 25,
-      condition: {
-        icon: 'http://test-icon-url.com/test-icon.png',
-      },
-    };
+      temp_c: "25",
+    },
+  };
 
-  it('renders the loading section when "load" is true', () => {
-    render(<WeatherCardSearch data={mockData} load={true} />);
+  it("renders the component with provided data", () => {
+    render(<WeatherCardSearch data={sampleData} />);
 
-    // Check if the loading section is displayed
-    const loadingSection = screen.getByTestId('loading-section');
-    expect(loadingSection).toBeInTheDocument();
+    // Test that the component renders with the correct data
+    expect(screen.getByText("Sample Country")).toBeInTheDocument();
+    expect(screen.getByText("Sample City")).toBeInTheDocument();
+    expect(screen.getByText("Sample Condition")).toBeInTheDocument();
+    expect(screen.getByText("25℃")).toBeInTheDocument();
   });
 
-  it('renders the search weather card when "load" is false', () => {
-    render(<WeatherCardSearch data={mockData} load={false} />);
-
-    // Check if the search weather card elements are displayed
-    const country = screen.getByText('Test Country');
-    const city = screen.getByText('Test City');
-    const condition = screen.getByText('Test Condition');
-    const temperature = screen.getByText('25℃');
-
-    expect(country).toBeInTheDocument();
-    expect(city).toBeInTheDocument();
-    expect(condition).toBeInTheDocument();
-    expect(temperature).toBeInTheDocument();
-  });
-
-  it('calls the provided functions when clicked', () => {
-    const onClick = jest.fn();
-    const deleteClick = jest.fn();
-
+  it("handles the delete button click", () => {
+    const deleteClickMock = jest.fn();
     render(
-      <WeatherCardSearch
-        data={mockData}
-        load={false}
-        onClick={onClick}
-        deleteClick={deleteClick}
-      />
+      <WeatherCardSearch data={sampleData} deleteClick={deleteClickMock} />
     );
 
-    // Click the elements that trigger functions
-    const cityElement = screen.getByText('Test City');
-    const deleteButton = screen.getByTestId('delete-button');
-
-    fireEvent.click(cityElement);
+    // Click the delete button
+    const deleteButton = screen.getByTestId("delete-button"); // Add data-testid to your delete button in the component
     fireEvent.click(deleteButton);
 
-    // Check if the functions are called
-    expect(onClick).toHaveBeenCalled();
-    expect(deleteClick).toHaveBeenCalled();
+    // Test that the deleteClick function was called
+    expect(deleteClickMock).toHaveBeenCalled();
   });
 
-  // You can add more test cases to cover other aspects of the component
+  it("handles the click event", () => {
+    const onClickMock = jest.fn();
+    render(<WeatherCardSearch data={sampleData} onClick={onClickMock} />);
+
+    // Click the component
+    const component = screen.getByTestId("weather-card"); // Add data-testid to your component in the component
+    fireEvent.click(component);
+
+    // Test that the onClick function was called
+    expect(onClickMock).toHaveBeenCalled();
+  });
+
+  it("renders loading state when load is true", () => {
+    render(<WeatherCardSearch data={sampleData} load={true} />);
+
+    // Test that the loading state is displayed
+    expect(screen.getByTestId("loading")).toBeInTheDocument();
+  });
 });
