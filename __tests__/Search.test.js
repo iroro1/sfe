@@ -53,7 +53,6 @@ describe("Search Component", () => {
   getWeatherApi.mockResolvedValue({
     data: {
       location: { name: "Tokyo" },
-      // Add more data as needed
     },
   });
 

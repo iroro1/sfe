@@ -38,5 +38,5 @@ To get started with our Weather App, follow these steps:
 
    ```bash
    git clone https://github.com/iroro1/sfe.git
-   cd weather-app
+   cd sfe
    ```
